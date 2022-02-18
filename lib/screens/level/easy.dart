@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import '../../components/components.dart';
 import '../../layout/layout.dart';
@@ -12,7 +14,9 @@ class EasyLevelScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Easy'),
+        backgroundColor: const Color(0xFF00504C),
       ),
+      backgroundColor: const Color(0xFF00504C),
       drawer: drawer(context),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
@@ -20,7 +24,10 @@ class EasyLevelScreen extends StatelessWidget {
             constraints: BoxConstraints(
               minHeight: constraints.maxHeight,
             ),
-            child: const PuzzleSections(),
+            child: const Padding(
+              padding: EdgeInsets.all(50.0),
+              child: PuzzleSections(),
+            ),
           ),
         );
       }),
@@ -38,6 +45,8 @@ class PuzzleSections extends StatefulWidget {
 }
 
 class _PuzzleSectionsState extends State<PuzzleSections> {
+  // final StreamController<int> controllerTile = StreamController<int>();
+  // final StreamController<int> controllerBee = StreamController<int>();
   @override
   void dispose() {
     puzzleInitiated = false;
@@ -49,10 +58,20 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
     return ResponsiveLayoutBuilder(
       small: (context, child) => Column(
         children: [
-          Container(
-            color: Colors.cyan,
+          StartSection(
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
           ),
-          const PuzzleBoardHoney(size: 350),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          PuzzleBoardHoney(
+            size: 350,
+            controllerTile1: controllerTile,
+            controllerBee2: controllerBee,
+          ),
           Container(
             color: Colors.teal,
           ),
@@ -60,80 +79,49 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
       ),
       medium: (context, child) => Column(
         children: [
-          Container(
-            color: Colors.cyan,
+          StartSection(
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
           ),
-          const PuzzleBoardHoney(size: 550),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          PuzzleBoardHoney(
+            size: 450,
+            controllerTile1: controllerTile,
+            controllerBee2: controllerBee,
+          ),
           Container(
             color: Colors.teal,
           ),
         ],
       ),
-      large: (context, child) => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      large: (context, child) => Column(
         children: [
-          Expanded(
-            child: Container(
-              color: Colors.cyan,
-            ),
-          ),
-          const PuzzleBoardHoney(size: 600),
-          Expanded(
-            child: Container(
-              color: Colors.teal,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: StartSection(
+                  controllerTile: controllerTile,
+                  controllerBee: controllerBee,
+                ),
+              ),
+              PuzzleBoardHoney(
+                size: 550,
+                controllerTile1: controllerTile,
+                controllerBee2: controllerBee,
+              ),
+              Expanded(
+                child: Container(
+                  color: Colors.teal,
+                ),
+              ),
+            ],
           ),
         ],
       ),
     );
   }
 }
-
-// class EasyLevelScreen extends StatefulWidget {
-//   static MaterialPage page() {
-//     return const MaterialPage(child: EasyLevelScreen());
-//   }
-
-//   const EasyLevelScreen({Key? key}) : super(key: key);
-
-//   @override
-//   State<EasyLevelScreen> createState() => _EasyLevelScreenState();
-// }
-
-// class _EasyLevelScreenState extends State<EasyLevelScreen> {
-//   @override
-//   Widget build(BuildContext context) {
-//     bool isHandset = MediaQuery.of(context).size.width < 1200;
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text('Easy'),
-//       ),
-//       drawer: drawer(context),
-//       body: LayoutBuilder(builder: (context, constraints) {
-//         return SingleChildScrollView(
-//           child: Flex(
-//             direction: isHandset ? Axis.vertical : Axis.horizontal,
-//             children: [
-//               Flexible(
-//                 fit: FlexFit.loose,
-//                 //flex: 1,
-//                 child: Container(),
-//               ),
-//               const Flexible(
-//                 fit: FlexFit.loose,
-//                 flex: 4,
-//                 child: PuzzleBoardHoney(),
-//               ),
-//               Flexible(
-//                 fit: FlexFit.loose,
-//                 //flex: 1,
-//                 child: Container(),
-//               ),
-//             ],
-//           ),
-//         );
-//       }),
-//       //body: const PuzzleBoardHoney(),
-//     );
-//   }
-// }

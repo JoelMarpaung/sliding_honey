@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -5,11 +6,15 @@ import 'package:hexagon/hexagon.dart';
 import '../globals.dart';
 
 class PuzzleBoardHoney extends StatefulWidget {
-  /// {@macro puzzle_board}
-
   final double size;
-  const PuzzleBoardHoney({Key? key, required this.size}) : super(key: key);
-
+  const PuzzleBoardHoney(
+      {Key? key,
+      required this.size,
+      required this.controllerTile1,
+      required this.controllerBee2})
+      : super(key: key);
+  final StreamController<int> controllerTile1;
+  final StreamController<int> controllerBee2;
   @override
   State<PuzzleBoardHoney> createState() => _PuzzleBoardHoneyState();
 }
@@ -45,21 +50,18 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     {'q': 4, 'r': 0},
     {'q': 4, 'r': -4}
   ];
-
+  int _tileMove = 1;
+  int _beeMove = 1;
   @override
   void initState() {
     if (!puzzleInitiated) {
+      q = 0;
+      r = 0;
       setOut();
       updateArrows();
       puzzleInitiated = true;
     }
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    puzzleInitiated = false;
-    super.dispose();
   }
 
   @override
@@ -73,9 +75,9 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
         padding: 2,
         cornerRadius: 10.0,
         elevation: 10,
-        color: Colors.yellow.shade300,
+        color: Colors.yellow.shade100,
         child: AnimatedSwitcher(
-          duration: const Duration(milliseconds: 300),
+          duration: const Duration(milliseconds: 250),
           transitionBuilder: (Widget child, Animation<double> animation) {
             return ScaleTransition(scale: animation, child: child);
           },
@@ -84,7 +86,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
           child: coordinates.q == q && coordinates.r == r
               ? HexagonWidget.flat(
                   width: 200,
-                  color: Colors.yellow.shade300,
+                  color: Colors.yellow.shade100,
                   inBounds: false,
                   child: showItem(coordinates.q, coordinates.r),
                 )
@@ -137,16 +139,19 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                           if (qChar == qArr1 && rChar == rArr1) {
                             moveBee();
                             updateArrows();
+                            widget.controllerBee2.add(_beeMove++);
                           }
                         } else if (arrow == arr2) {
                           if (qChar == qArr2 && rChar == rArr2) {
                             moveBee();
                             updateArrows();
+                            widget.controllerBee2.add(_beeMove++);
                           }
                         } else if (arrow == arr3) {
                           if (qChar == qArr3 && rChar == rArr3) {
                             moveBee();
                             updateArrows();
+                            controllerBee.add(_beeMove++);
                           }
                         }
                         if ((qChar == qOut1 && rChar == rOut1) ||
@@ -156,6 +161,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                         }
                         q = coordinates.q;
                         r = coordinates.r;
+                        controllerTile.add(_tileMove++);
                       });
                     }
                   },
