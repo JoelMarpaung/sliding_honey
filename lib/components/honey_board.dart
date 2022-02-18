@@ -14,7 +14,8 @@ class PuzzleBoardHoney extends StatefulWidget {
   State<PuzzleBoardHoney> createState() => _PuzzleBoardHoneyState();
 }
 
-class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney> {
+class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
+    with SingleTickerProviderStateMixin {
   var random = Random();
   var arrayQR = [
     {'q': -1, 'r': -3},
@@ -52,8 +53,13 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney> {
       updateArrows();
       puzzleInitiated = true;
     }
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    puzzleInitiated = false;
+    super.dispose();
   }
 
   @override
@@ -65,83 +71,115 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney> {
       depth: 4,
       buildTile: (coordinates) => HexagonWidgetBuilder(
         padding: 2,
-        cornerRadius: 8.0,
-        elevation: 50,
-        color: Colors.orangeAccent,
-        child: coordinates.q == q && coordinates.r == r
-            ? HexagonWidget.flat(
-                width: 100,
-                color: Colors.transparent,
-                inBounds: false,
-                child: showItem(coordinates.q, coordinates.r),
-              )
-            : GestureDetector(
-                child: HexagonWidget.flat(
-                  width: 100,
-                  color: Colors.limeAccent,
+        cornerRadius: 10.0,
+        elevation: 10,
+        color: Colors.yellow.shade300,
+        child: AnimatedSwitcher(
+          duration: const Duration(milliseconds: 300),
+          transitionBuilder: (Widget child, Animation<double> animation) {
+            return ScaleTransition(scale: animation, child: child);
+          },
+          switchInCurve: Curves.easeInOut,
+          switchOutCurve: Curves.easeInOut,
+          child: coordinates.q == q && coordinates.r == r
+              ? HexagonWidget.flat(
+                  width: 200,
+                  color: Colors.yellow.shade300,
                   inBounds: false,
                   child: showItem(coordinates.q, coordinates.r),
+                )
+              : GestureDetector(
+                  child: HexagonWidget.flat(
+                    width: 100,
+                    color: Colors.amberAccent,
+                    inBounds: false,
+                    child: Center(
+                      child: Container(
+                        width: 200,
+                        height: 200,
+                        decoration: const BoxDecoration(
+                          gradient: RadialGradient(
+                            colors: [
+                              Colors.yellow,
+                              Colors.amberAccent,
+                              Colors.orange
+                            ],
+                            center: Alignment(0.6, -0.3),
+                            focal: Alignment(0.3, -0.1),
+                          ),
+                        ),
+                        child: showItem(coordinates.q, coordinates.r),
+                      ),
+                    ),
+                  ),
+                  onTap: () {
+                    if ((((q + r) - (coordinates.q + coordinates.r)).abs() <
+                            2) &&
+                        ((q - coordinates.q).abs() < 2 &&
+                            (r - coordinates.r).abs() < 2)) {
+                      setState(() {
+                        if (qArr1 == coordinates.q && rArr1 == coordinates.r) {
+                          qArr1 = q;
+                          rArr1 = r;
+                          arrow = arr1;
+                        } else if (qArr2 == coordinates.q &&
+                            rArr2 == coordinates.r) {
+                          qArr2 = q;
+                          rArr2 = r;
+                          arrow = arr2;
+                        } else if (qArr3 == coordinates.q &&
+                            rArr3 == coordinates.r) {
+                          qArr3 = q;
+                          rArr3 = r;
+                          arrow = arr3;
+                        }
+                        if (arrow == arr1) {
+                          if (qChar == qArr1 && rChar == rArr1) {
+                            moveBee();
+                            updateArrows();
+                          }
+                        } else if (arrow == arr2) {
+                          if (qChar == qArr2 && rChar == rArr2) {
+                            moveBee();
+                            updateArrows();
+                          }
+                        } else if (arrow == arr3) {
+                          if (qChar == qArr3 && rChar == rArr3) {
+                            moveBee();
+                            updateArrows();
+                          }
+                        }
+                        if ((qChar == qOut1 && rChar == rOut1) ||
+                            (qChar == qOut2 && rChar == rOut2) ||
+                            (qChar == qOut3 && rChar == rOut3)) {
+                          print('Succes');
+                        }
+                        q = coordinates.q;
+                        r = coordinates.r;
+                      });
+                    }
+                  },
                 ),
-                onTap: () {
-                  if ((((q + r) - (coordinates.q + coordinates.r)).abs() < 2) &&
-                      ((q - coordinates.q).abs() < 2 &&
-                          (r - coordinates.r).abs() < 2)) {
-                    setState(() {
-                      if (qArr1 == coordinates.q && rArr1 == coordinates.r) {
-                        qArr1 = q;
-                        rArr1 = r;
-                        arrow = arr1;
-                      } else if (qArr2 == coordinates.q &&
-                          rArr2 == coordinates.r) {
-                        qArr2 = q;
-                        rArr2 = r;
-                        arrow = arr2;
-                      } else if (qArr3 == coordinates.q &&
-                          rArr3 == coordinates.r) {
-                        qArr3 = q;
-                        rArr3 = r;
-                        arrow = arr3;
-                      }
-                      if (arrow == arr1) {
-                        if (qChar == qArr1 && rChar == rArr1) {
-                          moveBee();
-                          updateArrows();
-                        }
-                      } else if (arrow == arr2) {
-                        if (qChar == qArr2 && rChar == rArr2) {
-                          moveBee();
-                          updateArrows();
-                        }
-                      } else if (arrow == arr3) {
-                        if (qChar == qArr3 && rChar == rArr3) {
-                          moveBee();
-                          updateArrows();
-                        }
-                      }
-                      if ((qChar == qOut1 && rChar == rOut1) ||
-                          (qChar == qOut2 && rChar == rOut2) ||
-                          (qChar == qOut3 && rChar == rOut3)) {
-                        print('Succes');
-                      }
-                      q = coordinates.q;
-                      r = coordinates.r;
-                    });
-                  }
-                },
-              ),
+        ),
       ),
     );
   }
 
   showItem(int qMain, int rMain) {
     if (qMain == qChar && rMain == rChar) {
-      return const Icon(Icons.favorite);
+      return const Icon(
+        Icons.favorite,
+        size: 35,
+      );
     } else if (qMain == qArr1 && rMain == rArr1) {
-      return Text('$arr1', style: const TextStyle(fontSize: 30));
+      return const Icon(
+          Icons.ac_unit); //Text('$arr1', style: const TextStyle(fontSize: 30));
     } else if (qMain == qArr2 && rMain == rArr2) {
-      return Text('$arr2', style: const TextStyle(fontSize: 30));
+      return const Icon(
+          Icons.ac_unit); //Text('$arr2', style: const TextStyle(fontSize: 30));
     } else if (qMain == qArr3 && rMain == rArr3) {
-      return Text('$arr3', style: const TextStyle(fontSize: 30));
+      return const Icon(
+          Icons.ac_unit); //Text('$arr3', style: const TextStyle(fontSize: 30));
     } else if (qMain == qOut1 && rMain == rOut1) {
       return const Icon(Icons.home);
     } else if (qMain == qOut2 && rMain == rOut2) {
