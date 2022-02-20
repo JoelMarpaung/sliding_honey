@@ -14,7 +14,7 @@ class _EndSectionState extends State<EndSection> {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: const [
         ResponsiveGap(
           small: 0,

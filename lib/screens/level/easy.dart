@@ -71,6 +71,11 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
             controllerTile1: controllerTile,
             controllerBee2: controllerBee,
           ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
           const EndSection(),
         ],
       ),
@@ -89,6 +94,11 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
             size: 400,
             controllerTile1: controllerTile,
             controllerBee2: controllerBee,
+          ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
           ),
           const EndSection(),
         ],

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 bool puzzleInitiated = false;
+bool gameStarted = false;
 int q = 0, r = 0;
 int qChar = 0, rChar = 0;
 int qArr1 = 0, rArr1 = 0, qArr2 = 0, rArr2 = 0, qArr3 = 0, rArr3 = 0;
