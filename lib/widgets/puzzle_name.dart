@@ -23,7 +23,7 @@ class PuzzleName extends StatelessWidget {
         ),
         duration: const Duration(milliseconds: 350),
         child: const Text(
-          'Sliding Honey Puzzle',
+          'Flutter Puzzle Hack',
         ),
       ),
     );

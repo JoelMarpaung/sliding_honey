@@ -50,8 +50,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     {'q': 4, 'r': 0},
     {'q': 4, 'r': -4}
   ];
-  int _tileMove = 1;
-  int _beeMove = 1;
+
   @override
   void initState() {
     if (!puzzleInitiated) {
@@ -73,7 +72,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
       depth: 4,
       buildTile: (coordinates) => HexagonWidgetBuilder(
         padding: 2,
-        cornerRadius: 10.0,
+        cornerRadius: 5.0,
         elevation: 10,
         color: Colors.yellow.shade100,
         child: AnimatedSwitcher(
@@ -139,19 +138,19 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                           if (qChar == qArr1 && rChar == rArr1) {
                             moveBee();
                             updateArrows();
-                            widget.controllerBee2.add(_beeMove++);
+                            widget.controllerBee2.add(++beeMove);
                           }
                         } else if (arrow == arr2) {
                           if (qChar == qArr2 && rChar == rArr2) {
                             moveBee();
                             updateArrows();
-                            widget.controllerBee2.add(_beeMove++);
+                            widget.controllerBee2.add(++beeMove);
                           }
                         } else if (arrow == arr3) {
                           if (qChar == qArr3 && rChar == rArr3) {
                             moveBee();
                             updateArrows();
-                            controllerBee.add(_beeMove++);
+                            controllerBee.add(++beeMove);
                           }
                         }
                         if ((qChar == qOut1 && rChar == rOut1) ||
@@ -161,7 +160,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                         }
                         q = coordinates.q;
                         r = coordinates.r;
-                        controllerTile.add(_tileMove++);
+                        controllerTile.add(++tileMove);
                       });
                     }
                   },

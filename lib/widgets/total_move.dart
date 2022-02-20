@@ -38,12 +38,17 @@ class _TotalMoveState extends State<TotalMove> {
   @override
   void initState() {
     super.initState();
-    if (!puzzleInitiated) {
-      streamSubscriptionTile = widget.tileMove.listen((moves) {
-        _updateTileMoves(moves);
-      });
-      streamSubscriptionBee = widget.beeMove.listen((moves) {
-        _updateBeeMoves(moves);
+
+    streamSubscriptionTile = widget.tileMove.listen((moves) {
+      _updateTileMoves(moves);
+    });
+    streamSubscriptionBee = widget.beeMove.listen((moves) {
+      _updateBeeMoves(moves);
+    });
+    if (puzzleInitiated) {
+      setState(() {
+        _updateTileMoves(tileMove);
+        _updateBeeMoves(beeMove);
       });
     }
   }
@@ -57,21 +62,6 @@ class _TotalMoveState extends State<TotalMove> {
 
   @override
   Widget build(BuildContext context) {
-    // return Row(
-    //   children: [
-    //     Text(
-    //       tileMoveToDisplay.toString(),
-    //       textScaleFactor: 5.0,
-    //       style: TextStyle(color: Colors.white),
-    //     ),
-    //     SizedBox(),
-    //     Text(
-    //       beeMoveToDisplay.toString(),
-    //       textScaleFactor: 5.0,
-    //       style: TextStyle(color: Colors.yellow),
-    //     ),
-    //   ],
-    // );
     return ResponsiveLayoutBuilder(
       small: (context, child) => Center(child: child),
       medium: (context, child) => Center(child: child),
@@ -84,45 +74,97 @@ class _TotalMoveState extends State<TotalMove> {
         final bodyTextStyle = currentSize == ResponsiveLayoutSize.small
             ? PuzzleTextStyle.bodySmall
             : PuzzleTextStyle.body;
-
-        return Row(
-          key: const Key('number_of_moves_and_tiles_left'),
-          mainAxisAlignment: mainAxisAlignment,
-          crossAxisAlignment: CrossAxisAlignment.baseline,
-          textBaseline: TextBaseline.alphabetic,
-          children: [
-            AnimatedDefaultTextStyle(
-              key: const Key('number_of_moves_and_tiles_left_moves'),
-              style: PuzzleTextStyle.headline4.copyWith(
-                color: PuzzleColors.white,
+        if (currentSize == ResponsiveLayoutSize.large) {
+          return Column(
+            children: [
+              Row(
+                //key: const Key('number_of_moves_and_tiles_left'),
+                mainAxisAlignment: mainAxisAlignment,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  AnimatedDefaultTextStyle(
+                    //key: const Key('number_of_moves_and_tiles_left_moves'),
+                    style: PuzzleTextStyle.headline4.copyWith(
+                      color: Colors.yellowAccent,
+                    ),
+                    duration: const Duration(milliseconds: 530),
+                    child: Text(tileMoveToDisplay.toString()),
+                  ),
+                  AnimatedDefaultTextStyle(
+                    style: bodyTextStyle.copyWith(
+                      color: PuzzleColors.white,
+                    ),
+                    duration: const Duration(milliseconds: 530),
+                    child: const Text(" tile's moves"),
+                  ),
+                ],
               ),
-              duration: const Duration(milliseconds: 530),
-              child: Text(tileMoveToDisplay.toString()),
-            ),
-            AnimatedDefaultTextStyle(
-              style: bodyTextStyle.copyWith(
-                color: PuzzleColors.white,
+              Row(
+                //key: const Key('number_of_moves_and_tiles_left'),
+                mainAxisAlignment: mainAxisAlignment,
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  AnimatedDefaultTextStyle(
+                    //key: const Key('number_of_moves_and_tiles_left_tiles_left'),
+                    style: PuzzleTextStyle.headline4.copyWith(
+                      color: Colors.yellowAccent,
+                    ),
+                    duration: const Duration(milliseconds: 530),
+                    child: Text(beeMoveToDisplay.toString()),
+                  ),
+                  AnimatedDefaultTextStyle(
+                    style: bodyTextStyle.copyWith(
+                      color: PuzzleColors.white,
+                    ),
+                    duration: const Duration(milliseconds: 530),
+                    child: const Text(" bee's moves"),
+                  ),
+                ],
               ),
-              duration: const Duration(milliseconds: 530),
-              child: const Text(" tile's moves | "),
-            ),
-            AnimatedDefaultTextStyle(
-              key: const Key('number_of_moves_and_tiles_left_tiles_left'),
-              style: PuzzleTextStyle.headline4.copyWith(
-                color: PuzzleColors.white,
+            ],
+          );
+        } else {
+          return Row(
+            key: const Key('number_of_moves_and_tiles_left'),
+            mainAxisAlignment: mainAxisAlignment,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              AnimatedDefaultTextStyle(
+                key: const Key('number_of_moves_and_tiles_left_moves'),
+                style: PuzzleTextStyle.headline4.copyWith(
+                  color: Colors.yellowAccent,
+                ),
+                duration: const Duration(milliseconds: 530),
+                child: Text(tileMoveToDisplay.toString()),
               ),
-              duration: const Duration(milliseconds: 530),
-              child: Text(beeMoveToDisplay.toString()),
-            ),
-            AnimatedDefaultTextStyle(
-              style: bodyTextStyle.copyWith(
-                color: PuzzleColors.white,
+              AnimatedDefaultTextStyle(
+                style: bodyTextStyle.copyWith(
+                  color: PuzzleColors.white,
+                ),
+                duration: const Duration(milliseconds: 530),
+                child: const Text(" tile's moves | "),
               ),
-              duration: const Duration(milliseconds: 530),
-              child: const Text(" bee's moves"),
-            ),
-          ],
-        );
+              AnimatedDefaultTextStyle(
+                key: const Key('number_of_moves_and_tiles_left_tiles_left'),
+                style: PuzzleTextStyle.headline4.copyWith(
+                  color: Colors.yellowAccent,
+                ),
+                duration: const Duration(milliseconds: 530),
+                child: Text(beeMoveToDisplay.toString()),
+              ),
+              AnimatedDefaultTextStyle(
+                style: bodyTextStyle.copyWith(
+                  color: PuzzleColors.white,
+                ),
+                duration: const Duration(milliseconds: 530),
+                child: const Text(" bee's moves"),
+              ),
+            ],
+          );
+        }
       },
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../layout/layout.dart';
@@ -24,9 +23,9 @@ class _StartSectionState extends State<StartSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const ResponsiveGap(
-          small: 20,
-          medium: 83,
-          large: 151,
+          small: 0,
+          medium: 0,
+          large: 50,
         ),
         const PuzzleName(),
         const ResponsiveGap(large: 16),
@@ -41,30 +40,12 @@ class _StartSectionState extends State<StartSection> {
         TotalMove(
             tileMove: widget.controllerTile.stream,
             beeMove: widget.controllerBee.stream),
-        // NumberOfMovesAndTilesLeft(
-        //   key: numberOfMovesAndTilesLeftKey,
-        //   numberOfMoves: state.numberOfMoves,
-        //   numberOfTilesLeft: status == DashatarPuzzleStatus.started
-        //       ? state.numberOfTilesLeft
-        //       : state.puzzle.tiles.length - 1,
-        // ),
         const ResponsiveGap(
           small: 8,
           medium: 18,
           large: 32,
         ),
-        ResponsiveLayoutBuilder(
-            small: (_, __) => const SizedBox(),
-            medium: (_, __) => const SizedBox(),
-            large: (_, __) =>
-                const SizedBox() //const DashatarPuzzleActionButton(),
-            ),
-        ResponsiveLayoutBuilder(
-          small: (_, __) => const SizedBox(), //DashatarTimer(),
-          medium: (_, __) => const SizedBox(), //const DashatarTimer(),
-          large: (_, __) => const SizedBox(),
-        ),
-        const ResponsiveGap(small: 12),
+        const Timer(),
       ],
     );
   }

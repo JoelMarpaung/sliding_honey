@@ -1,12 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../../components/components.dart';
 import '../../layout/layout.dart';
 import '../../globals.dart';
 
 class EasyLevelScreen extends StatelessWidget {
-  /// {@macro puzzle_view}
   const EasyLevelScreen({Key? key}) : super(key: key);
 
   @override
@@ -25,19 +23,17 @@ class EasyLevelScreen extends StatelessWidget {
               minHeight: constraints.maxHeight,
             ),
             child: const Padding(
-              padding: EdgeInsets.all(50.0),
+              padding: EdgeInsets.all(70.0),
               child: PuzzleSections(),
             ),
           ),
         );
       }),
-      //body: const PuzzleBoardHoney(),
     );
   }
 }
 
 class PuzzleSections extends StatefulWidget {
-  /// {@macro puzzle_sections}
   const PuzzleSections({Key? key}) : super(key: key);
 
   @override
@@ -50,6 +46,9 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
   @override
   void dispose() {
     puzzleInitiated = false;
+    tileMove = 0;
+    beeMove = 0;
+    stopWatchTimer.onExecute.add(StopWatchExecute.reset);
     super.dispose();
   }
 
@@ -68,13 +67,11 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
             large: 32,
           ),
           PuzzleBoardHoney(
-            size: 350,
+            size: 300,
             controllerTile1: controllerTile,
             controllerBee2: controllerBee,
           ),
-          Container(
-            color: Colors.teal,
-          ),
+          const EndSection(),
         ],
       ),
       medium: (context, child) => Column(
@@ -89,13 +86,11 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
             large: 32,
           ),
           PuzzleBoardHoney(
-            size: 450,
+            size: 400,
             controllerTile1: controllerTile,
             controllerBee2: controllerBee,
           ),
-          Container(
-            color: Colors.teal,
-          ),
+          const EndSection(),
         ],
       ),
       large: (context, child) => Column(
@@ -109,14 +104,12 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
                 ),
               ),
               PuzzleBoardHoney(
-                size: 550,
+                size: 500,
                 controllerTile1: controllerTile,
                 controllerBee2: controllerBee,
               ),
-              Expanded(
-                child: Container(
-                  color: Colors.teal,
-                ),
+              const Expanded(
+                child: EndSection(),
               ),
             ],
           ),
