@@ -49,6 +49,7 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
     tileMove = 0;
     beeMove = 0;
     stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+    gameStarted = false;
     super.dispose();
   }
 
@@ -68,8 +69,8 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
           ),
           PuzzleBoardHoney(
             size: 300,
-            controllerTile1: controllerTile,
-            controllerBee2: controllerBee,
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
           ),
           const ResponsiveGap(
             small: 8,
@@ -92,8 +93,8 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
           ),
           PuzzleBoardHoney(
             size: 400,
-            controllerTile1: controllerTile,
-            controllerBee2: controllerBee,
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
           ),
           const ResponsiveGap(
             small: 8,
@@ -115,8 +116,8 @@ class _PuzzleSectionsState extends State<PuzzleSections> {
               ),
               PuzzleBoardHoney(
                 size: 500,
-                controllerTile1: controllerTile,
-                controllerBee2: controllerBee,
+                controllerTile: controllerTile,
+                controllerBee: controllerBee,
               ),
               const Expanded(
                 child: EndSection(),

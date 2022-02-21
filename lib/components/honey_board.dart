@@ -10,17 +10,24 @@ class PuzzleBoardHoney extends StatefulWidget {
   const PuzzleBoardHoney(
       {Key? key,
       required this.size,
-      required this.controllerTile1,
-      required this.controllerBee2})
+      required this.controllerTile,
+      required this.controllerBee})
       : super(key: key);
-  final StreamController<int> controllerTile1;
-  final StreamController<int> controllerBee2;
+  final StreamController<int> controllerTile;
+  final StreamController<int> controllerBee;
   @override
   State<PuzzleBoardHoney> createState() => _PuzzleBoardHoneyState();
 }
 
 class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     with SingleTickerProviderStateMixin {
+  final Stream<bool> _gamePlay = gamePlay.stream;
+  late StreamSubscription<bool> streamSubscriptionGame;
+  static const _kFontFam = 'MyFlutterApp';
+  static const String? _kFontPkg = null;
+
+  static const IconData bee =
+      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   var random = Random();
   var arrayQR = [
     {'q': -1, 'r': -3},
@@ -60,7 +67,30 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
       updateArrows();
       puzzleInitiated = true;
     }
+
+    streamSubscriptionGame = _gamePlay.listen((gamePlay) {
+      if (gameStarted == true) {
+        replay();
+      }
+    });
     super.initState();
+  }
+
+  void replay() {
+    setState(() {
+      q = 0;
+      r = 0;
+      qChar = 0;
+      rChar = 0;
+      setOut();
+      updateArrows();
+    });
+  }
+
+  @override
+  void dispose() {
+    streamSubscriptionGame.cancel();
+    super.dispose();
   }
 
   @override
@@ -96,8 +126,8 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                     inBounds: false,
                     child: Center(
                       child: Container(
-                        width: 200,
-                        height: 200,
+                        width: 100,
+                        height: 100,
                         decoration: const BoxDecoration(
                           gradient: RadialGradient(
                             colors: [
@@ -117,7 +147,8 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                     if ((((q + r) - (coordinates.q + coordinates.r)).abs() <
                             2) &&
                         ((q - coordinates.q).abs() < 2 &&
-                            (r - coordinates.r).abs() < 2)) {
+                            (r - coordinates.r).abs() < 2) &&
+                        gameStarted == true) {
                       setState(() {
                         if (qArr1 == coordinates.q && rArr1 == coordinates.r) {
                           qArr1 = q;
@@ -138,13 +169,13 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                           if (qChar == qArr1 && rChar == rArr1) {
                             moveBee();
                             updateArrows();
-                            widget.controllerBee2.add(++beeMove);
+                            widget.controllerBee.add(++beeMove);
                           }
                         } else if (arrow == arr2) {
                           if (qChar == qArr2 && rChar == rArr2) {
                             moveBee();
                             updateArrows();
-                            widget.controllerBee2.add(++beeMove);
+                            widget.controllerBee.add(++beeMove);
                           }
                         } else if (arrow == arr3) {
                           if (qChar == qArr3 && rChar == rArr3) {
@@ -172,26 +203,46 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
 
   showItem(int qMain, int rMain) {
     if (qMain == qChar && rMain == rChar) {
-      return const Icon(
-        Icons.favorite,
-        size: 35,
-      );
+      return const Icon(Icons.face);
     } else if (qMain == qArr1 && rMain == rArr1) {
-      return const Icon(
-          Icons.ac_unit); //Text('$arr1', style: const TextStyle(fontSize: 30));
+      return iconArrow(
+          arr1); //Text('$arr1', style: const TextStyle(fontSize: 30));
     } else if (qMain == qArr2 && rMain == rArr2) {
-      return const Icon(
-          Icons.ac_unit); //Text('$arr2', style: const TextStyle(fontSize: 30));
+      return iconArrow(
+          arr2); //Text('$arr2', style: const TextStyle(fontSize: 30));
     } else if (qMain == qArr3 && rMain == rArr3) {
-      return const Icon(
-          Icons.ac_unit); //Text('$arr3', style: const TextStyle(fontSize: 30));
+      return iconArrow(
+          arr3); //Text('$arr3', style: const TextStyle(fontSize: 30));
     } else if (qMain == qOut1 && rMain == rOut1) {
-      return const Icon(Icons.home);
+      return const Icon(Icons.home, size: 35);
     } else if (qMain == qOut2 && rMain == rOut2) {
-      return const Icon(Icons.home);
+      return const Icon(Icons.home, size: 35);
     } else if (qMain == qOut3 && rMain == rOut3) {
-      return const Icon(Icons.home);
+      return const Icon(Icons.home, size: 35);
     }
+  }
+
+  Widget iconArrow(int arrow) {
+    double _angle = 0;
+    if (arrow == 0) {
+      _angle = 4.7;
+    } else if (arrow == 1) {
+      _angle = 5.6;
+    } else if (arrow == 2) {
+      _angle = 0.4;
+    } else if (arrow == 3) {
+      _angle = 1.6;
+    } else if (arrow == 4) {
+      _angle = 2.5;
+    } else if (arrow == 5) {
+      _angle = 3.7;
+    }
+    return Transform.rotate(
+        angle: _angle,
+        child: const Icon(
+          Icons.arrow_right_alt_outlined,
+          size: 35,
+        ));
   }
 
   moveBee() {

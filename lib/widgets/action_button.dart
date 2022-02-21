@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
-import 'widgets.dart';
 
 class ActionButton extends StatefulWidget {
   const ActionButton({Key? key}) : super(key: key);
@@ -32,6 +31,9 @@ class _ActionButtonState extends State<ActionButton> {
             stopWatchTimer.onExecute.add(StopWatchExecute.start);
             beeMove = 0;
             tileMove = 0;
+            controllerTile.add(tileMove);
+            controllerBee.add(beeMove);
+            gamePlay.add(gameStarted);
           } else {
             gameStarted = true;
             stopWatchTimer.onExecute.add(StopWatchExecute.start);

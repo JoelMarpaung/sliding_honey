@@ -11,6 +11,7 @@ int out1 = 0, out2 = 0, out3 = 0;
 int qOut1 = 0, rOut1 = 0, qOut2 = 0, rOut2 = 0, qOut3 = 0, rOut3 = 0;
 StreamController<int> controllerTile = StreamController<int>.broadcast();
 StreamController<int> controllerBee = StreamController<int>.broadcast();
+StreamController<bool> gamePlay = StreamController<bool>.broadcast();
 int beeMove = 0;
 int tileMove = 0;
 StopWatchTimer stopWatchTimer = StopWatchTimer(
