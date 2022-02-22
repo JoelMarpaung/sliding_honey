@@ -26,18 +26,27 @@ class _ActionButtonState extends State<ActionButton> {
       ),
       onPressed: () async {
         setState(() {
-          if (gameStarted == true) {
-            stopWatchTimer.onExecute.add(StopWatchExecute.reset);
-            stopWatchTimer.onExecute.add(StopWatchExecute.start);
-            beeMove = 0;
-            tileMove = 0;
-            controllerTile.add(tileMove);
-            controllerBee.add(beeMove);
-            gamePlay.add(gameStarted);
-          } else {
-            gameStarted = true;
-            stopWatchTimer.onExecute.add(StopWatchExecute.start);
-          }
+          gameStarted = true;
+          stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+          stopWatchTimer.onExecute.add(StopWatchExecute.start);
+          beeMove = 0;
+          tileMove = 0;
+          controllerTile.add(tileMove);
+          controllerBee.add(beeMove);
+          gamePlay.add(gameStarted);
+          // if (gameStarted == true) {
+          //   stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+          //   stopWatchTimer.onExecute.add(StopWatchExecute.start);
+          //   beeMove = 0;
+          //   tileMove = 0;
+          //   controllerTile.add(tileMove);
+          //   controllerBee.add(beeMove);
+          //   gamePlay.add(gameStarted);
+          // } else {
+          //   gameStarted = true;
+          //   stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+          //   stopWatchTimer.onExecute.add(StopWatchExecute.start);
+          // }
         });
       },
       child: AnimatedSwitcher(

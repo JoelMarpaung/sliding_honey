@@ -17,19 +17,19 @@ class _EndSectionState extends State<EndSection> {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: const [
         ResponsiveGap(
-          small: 0,
-          medium: 0,
+          small: 10,
+          medium: 10,
           large: 50,
         ),
         ActionButton(),
         ResponsiveGap(
-          small: 20,
-          medium: 20,
-          large: 20,
+          small: 30,
+          medium: 30,
+          large: 30,
         ),
         Image(
-          image: AssetImage('images/bee1.png'),
-          width: 250,
+          image: AssetImage('images/bee.png'),
+          width: 200,
         ),
       ],
     );

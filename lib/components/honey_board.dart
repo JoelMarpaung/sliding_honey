@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
 
 class PuzzleBoardHoney extends StatefulWidget {
@@ -187,6 +188,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                         q = coordinates.q;
                         r = coordinates.r;
                         controllerTile.add(++tileMove);
+                        onComplete();
                       });
                     }
                   },
@@ -326,5 +328,31 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     while (arr1 == arr3 || arr2 == arr3) {
       arr3 = random.nextInt(5);
     }
+  }
+
+  void onComplete() {
+    gameStarted = false;
+    stopWatchTimer.onExecute.add(StopWatchExecute.stop);
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: const Text("CONGRATULATION !!!"),
+            content: const Text(
+                "You have won this level. Do you want to re-play the game?"),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'No'),
+                child: const Text('No'),
+              ),
+              TextButton(
+                onPressed: () {
+                  //_dismissDialog();
+                },
+                child: const Text('Yes'),
+              )
+            ],
+          );
+        });
   }
 }
