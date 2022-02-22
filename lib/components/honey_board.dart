@@ -23,11 +23,6 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     with SingleTickerProviderStateMixin {
   final Stream<bool> _gamePlay = gamePlay.stream;
   late StreamSubscription<bool> streamSubscriptionGame;
-  static const _kFontFam = 'MyFlutterApp';
-  static const String? _kFontPkg = null;
-
-  static const IconData bee =
-      IconData(0xe801, fontFamily: _kFontFam, fontPackage: _kFontPkg);
   var random = Random();
   var arrayQR = [
     {'q': -1, 'r': -3},
@@ -203,7 +198,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
 
   showItem(int qMain, int rMain) {
     if (qMain == qChar && rMain == rChar) {
-      return const Icon(Icons.face);
+      return const Icon(Icons.bug_report_outlined, size: 35);
     } else if (qMain == qArr1 && rMain == rArr1) {
       return iconArrow(
           arr1); //Text('$arr1', style: const TextStyle(fontSize: 30));
@@ -214,11 +209,11 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
       return iconArrow(
           arr3); //Text('$arr3', style: const TextStyle(fontSize: 30));
     } else if (qMain == qOut1 && rMain == rOut1) {
-      return const Icon(Icons.home, size: 35);
+      return const Icon(Icons.home_outlined, size: 35);
     } else if (qMain == qOut2 && rMain == rOut2) {
-      return const Icon(Icons.home, size: 35);
+      return const Icon(Icons.home_outlined, size: 35);
     } else if (qMain == qOut3 && rMain == rOut3) {
-      return const Icon(Icons.home, size: 35);
+      return const Icon(Icons.home_outlined, size: 35);
     }
   }
 

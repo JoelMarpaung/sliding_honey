@@ -22,6 +22,15 @@ class _EndSectionState extends State<EndSection> {
           large: 50,
         ),
         ActionButton(),
+        ResponsiveGap(
+          small: 20,
+          medium: 20,
+          large: 20,
+        ),
+        Image(
+          image: AssetImage('images/bee1.png'),
+          width: 250,
+        ),
       ],
     );
   }
