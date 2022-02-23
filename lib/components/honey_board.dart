@@ -183,12 +183,11 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                         if ((qChar == qOut1 && rChar == rOut1) ||
                             (qChar == qOut2 && rChar == rOut2) ||
                             (qChar == qOut3 && rChar == rOut3)) {
-                          print('Succes');
+                          onComplete();
                         }
                         q = coordinates.q;
                         r = coordinates.r;
                         controllerTile.add(++tileMove);
-                        onComplete();
                       });
                     }
                   },
@@ -334,25 +333,40 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     gameStarted = false;
     stopWatchTimer.onExecute.add(StopWatchExecute.stop);
     showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("CONGRATULATION !!!"),
-            content: const Text(
-                "You have won this level. Do you want to re-play the game?"),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () => Navigator.pop(context, 'No'),
-                child: const Text('No'),
-              ),
-              TextButton(
-                onPressed: () {
-                  //_dismissDialog();
-                },
-                child: const Text('Yes'),
-              )
-            ],
-          );
-        });
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("CONGRATULATION !!!"),
+          content: const Text(
+              "You have won this level. Do you want to re-start the game?"),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'No'),
+              child: const Text('No'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Yes');
+                reStart();
+              },
+              child: const Text('Yes'),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void reStart() {
+    setState(() {
+      gameStarted = true;
+      stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+      stopWatchTimer.onExecute.add(StopWatchExecute.start);
+      beeMove = 0;
+      tileMove = 0;
+      controllerTile.add(tileMove);
+      controllerBee.add(beeMove);
+      gamePlay.add(gameStarted);
+    });
   }
 }
