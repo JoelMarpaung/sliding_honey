@@ -128,10 +128,14 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
                           !(coordinates.q == qChg2 && coordinates.r == rChg2) &&
                           !(coordinates.q == qChg3 && coordinates.r == rChg3) &&
                           !(coordinates.q == qChg4 && coordinates.r == rChg4) &&
+                          !(coordinates.q == qChg5 && coordinates.r == rChg5) &&
+                          !(coordinates.q == qChg6 && coordinates.r == rChg6) &&
                           !(coordinates.q == qEnd1 && coordinates.r == rEnd1) &&
                           !(coordinates.q == qEnd2 && coordinates.r == rEnd2) &&
                           !(coordinates.q == qEnd3 && coordinates.r == rEnd3) &&
-                          !(coordinates.q == qEnd4 && coordinates.r == rEnd4)) {
+                          !(coordinates.q == qEnd4 && coordinates.r == rEnd4) &&
+                          !(coordinates.q == qEnd5 && coordinates.r == rEnd5) &&
+                          !(coordinates.q == qEnd6 && coordinates.r == rEnd6)) {
                         setState(() {
                           if (qArr1 == coordinates.q &&
                               rArr1 == coordinates.r) {
@@ -195,13 +199,17 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     } else if ((qMain == qChg1 && rMain == rChg1) ||
         (qMain == qChg2 && rMain == rChg2) ||
         (qMain == qChg3 && rMain == rChg3) ||
-        (qMain == qChg4 && rMain == rChg4)) {
+        (qMain == qChg4 && rMain == rChg4) ||
+        (qMain == qChg5 && rMain == rChg5) ||
+        (qMain == qChg6 && rMain == rChg6)) {
       return const Icon(Icons.change_circle_outlined,
           size: 35, color: Colors.green);
     } else if ((qMain == qEnd1 && rMain == rEnd1) ||
         (qMain == qEnd2 && rMain == rEnd2) ||
         (qMain == qEnd3 && rMain == rEnd3) ||
-        (qMain == qEnd4 && rMain == rEnd4)) {
+        (qMain == qEnd4 && rMain == rEnd4) ||
+        (qMain == qEnd5 && rMain == rEnd5) ||
+        (qMain == qEnd6 && rMain == rEnd6)) {
       return const Icon(Icons.catching_pokemon_outlined,
           size: 35, color: Colors.indigo);
     }
@@ -270,13 +278,17 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     } else if ((qChar == qChg1 && rChar == rChg1) ||
         (qChar == qChg2 && rChar == rChg2) ||
         (qChar == qChg3 && rChar == rChg3) ||
-        (qChar == qChg4 && rChar == rChg4)) {
+        (qChar == qChg4 && rChar == rChg4) ||
+        (qChar == qChg5 && rChar == rChg5) ||
+        (qChar == qChg6 && rChar == rChg6)) {
       qChar = 0;
       rChar = 0;
     } else if ((qChar == qEnd1 && rChar == rEnd1) ||
         (qChar == qEnd2 && rChar == rEnd2) ||
         (qChar == qEnd3 && rChar == rEnd3) ||
-        (qChar == qEnd4 && rChar == rEnd4)) {
+        (qChar == qEnd4 && rChar == rEnd4) ||
+        (qChar == qEnd5 && rChar == rEnd5) ||
+        (qChar == qEnd6 && rChar == rEnd6)) {
       qChar = qEnd;
       rChar = rEnd;
     }
@@ -334,6 +346,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     var qrResult = arrayChangeQR.elementAt(indexQR1);
     qChg1 = qrResult['q']!;
     rChg1 = qrResult['r']!;
+
     int indexQR2 = random.nextInt(29);
     while (indexQR1 == indexQR2) {
       indexQR2 = random.nextInt(29);
@@ -341,6 +354,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR2);
     qChg2 = qrResult['q']!;
     rChg2 = qrResult['r']!;
+
     int indexQR3 = random.nextInt(29);
     while (indexQR1 == indexQR3 || indexQR2 == indexQR3) {
       indexQR3 = random.nextInt(29);
@@ -348,6 +362,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR3);
     qChg3 = qrResult['q']!;
     rChg3 = qrResult['r']!;
+
     int indexQR4 = random.nextInt(29);
     while (
         indexQR1 == indexQR4 || indexQR2 == indexQR4 || indexQR3 == indexQR4) {
@@ -356,6 +371,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR4);
     qChg4 = qrResult['q']!;
     rChg4 = qrResult['r']!;
+
     int indexQR5 = random.nextInt(29);
     while (indexQR1 == indexQR5 ||
         indexQR2 == indexQR5 ||
@@ -366,6 +382,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR5);
     qEnd1 = qrResult['q']!;
     rEnd1 = qrResult['r']!;
+
     int indexQR6 = random.nextInt(29);
     while (indexQR1 == indexQR6 ||
         indexQR2 == indexQR6 ||
@@ -377,6 +394,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR6);
     qEnd2 = qrResult['q']!;
     rEnd2 = qrResult['r']!;
+
     int indexQR7 = random.nextInt(29);
     while (indexQR1 == indexQR7 ||
         indexQR2 == indexQR7 ||
@@ -389,6 +407,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR7);
     qEnd3 = qrResult['q']!;
     rEnd3 = qrResult['r']!;
+
     int indexQR8 = random.nextInt(29);
     while (indexQR1 == indexQR8 ||
         indexQR2 == indexQR8 ||
@@ -402,6 +421,72 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
     qrResult = arrayChangeQR.elementAt(indexQR8);
     qEnd4 = qrResult['q']!;
     rEnd4 = qrResult['r']!;
+
+    int indexQR9 = random.nextInt(29);
+    while (indexQR1 == indexQR9 ||
+        indexQR2 == indexQR9 ||
+        indexQR3 == indexQR9 ||
+        indexQR4 == indexQR9 ||
+        indexQR5 == indexQR9 ||
+        indexQR6 == indexQR9 ||
+        indexQR7 == indexQR9 ||
+        indexQR8 == indexQR9) {
+      indexQR9 = random.nextInt(29);
+    }
+    qrResult = arrayChangeQR.elementAt(indexQR9);
+    qEnd5 = qrResult['q']!;
+    rEnd5 = qrResult['r']!;
+
+    int indexQR10 = random.nextInt(29);
+    while (indexQR1 == indexQR10 ||
+        indexQR2 == indexQR10 ||
+        indexQR3 == indexQR10 ||
+        indexQR4 == indexQR10 ||
+        indexQR5 == indexQR10 ||
+        indexQR6 == indexQR10 ||
+        indexQR7 == indexQR10 ||
+        indexQR8 == indexQR10 ||
+        indexQR9 == indexQR10) {
+      indexQR10 = random.nextInt(29);
+    }
+    qrResult = arrayChangeQR.elementAt(indexQR10);
+    qEnd6 = qrResult['q']!;
+    rEnd6 = qrResult['r']!;
+
+    int indexQR11 = random.nextInt(29);
+    while (indexQR1 == indexQR11 ||
+        indexQR2 == indexQR11 ||
+        indexQR3 == indexQR11 ||
+        indexQR4 == indexQR11 ||
+        indexQR5 == indexQR11 ||
+        indexQR6 == indexQR11 ||
+        indexQR7 == indexQR11 ||
+        indexQR8 == indexQR11 ||
+        indexQR9 == indexQR11 ||
+        indexQR10 == indexQR11) {
+      indexQR11 = random.nextInt(29);
+    }
+    qrResult = arrayChangeQR.elementAt(indexQR11);
+    qChg5 = qrResult['q']!;
+    rChg5 = qrResult['r']!;
+
+    int indexQR12 = random.nextInt(29);
+    while (indexQR1 == indexQR12 ||
+        indexQR2 == indexQR12 ||
+        indexQR3 == indexQR12 ||
+        indexQR4 == indexQR12 ||
+        indexQR5 == indexQR12 ||
+        indexQR6 == indexQR12 ||
+        indexQR7 == indexQR12 ||
+        indexQR8 == indexQR12 ||
+        indexQR9 == indexQR12 ||
+        indexQR10 == indexQR12 ||
+        indexQR11 == indexQR12) {
+      indexQR12 = random.nextInt(29);
+    }
+    qrResult = arrayChangeQR.elementAt(indexQR12);
+    qChg6 = qrResult['q']!;
+    rChg6 = qrResult['r']!;
   }
 
   void onComplete() {
