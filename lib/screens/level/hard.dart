@@ -1,26 +1,131 @@
 import 'package:flutter/material.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../../components/components.dart';
+import '../../layout/layout.dart';
+import '../../globals.dart';
 
-class HardLevelScreen extends StatefulWidget {
-  static MaterialPage page() {
-    return const MaterialPage(child: HardLevelScreen());
-  }
-
+class HardLevelScreen extends StatelessWidget {
   const HardLevelScreen({Key? key}) : super(key: key);
 
-  @override
-  State<HardLevelScreen> createState() => _HardLevelScreenState();
-}
-
-class _HardLevelScreenState extends State<HardLevelScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Hard'),
+        backgroundColor: const Color(0xFF00504C),
       ),
+      backgroundColor: const Color(0xFF00504C),
       drawer: drawer(context),
-      body: Container(),
+      body: LayoutBuilder(builder: (context, constraints) {
+        return SingleChildScrollView(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: constraints.maxHeight,
+            ),
+            child: const Padding(
+              padding: EdgeInsets.all(70.0),
+              child: PuzzleSectionsHard(),
+            ),
+          ),
+        );
+      }),
+    );
+  }
+}
+
+class PuzzleSectionsHard extends StatefulWidget {
+  const PuzzleSectionsHard({Key? key}) : super(key: key);
+
+  @override
+  State<PuzzleSectionsHard> createState() => _PuzzleSectionsHardState();
+}
+
+class _PuzzleSectionsHardState extends State<PuzzleSectionsHard> {
+  // final StreamController<int> controllerTile = StreamController<int>();
+  // final StreamController<int> controllerBee = StreamController<int>();
+  @override
+  void dispose() {
+    puzzleInitiated = false;
+    tileMove = 0;
+    beeMove = 0;
+    stopWatchTimer.onExecute.add(StopWatchExecute.reset);
+    gameStarted = false;
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ResponsiveLayoutBuilder(
+      small: (context, child) => Column(
+        children: [
+          StartSection(
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
+          ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          PuzzleBoardHoneyHard(
+            size: 300,
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
+          ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          const EndSection(),
+        ],
+      ),
+      medium: (context, child) => Column(
+        children: [
+          StartSection(
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
+          ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          PuzzleBoardHoneyHard(
+            size: 400,
+            controllerTile: controllerTile,
+            controllerBee: controllerBee,
+          ),
+          const ResponsiveGap(
+            small: 8,
+            medium: 18,
+            large: 32,
+          ),
+          const EndSection(),
+        ],
+      ),
+      large: (context, child) => Column(
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: StartSection(
+                  controllerTile: controllerTile,
+                  controllerBee: controllerBee,
+                ),
+              ),
+              PuzzleBoardHoneyHard(
+                size: 500,
+                controllerTile: controllerTile,
+                controllerBee: controllerBee,
+              ),
+              const Expanded(
+                child: EndSection(),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
