@@ -53,8 +53,7 @@ class MyRouter {
       final splashLoc = state.namedLocation('splash');
       final splashScreen = state.subloc == splashLoc;
       final initialized = appState.isInitialized;
-      final rootLoc =
-          state.namedLocation('hard'); //state.namedLocation('home');
+      final rootLoc = state.namedLocation('home');
 
       if (!initialized && !splashScreen) return splashLoc;
       if (initialized && splashScreen) return rootLoc;
