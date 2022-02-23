@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hexagon/hexagon.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
+import '../models/qr_model.dart';
 
 class PuzzleBoardHoney extends StatefulWidget {
   final double size;
@@ -25,34 +26,6 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
   final Stream<bool> _gamePlay = gamePlay.stream;
   late StreamSubscription<bool> streamSubscriptionGame;
   var random = Random();
-  var arrayQR = [
-    {'q': -1, 'r': -3},
-    {'q': -2, 'r': -2},
-    {'q': -3, 'r': -1},
-    {'q': -4, 'r': 1},
-    {'q': -4, 'r': 2},
-    {'q': -4, 'r': 3},
-    {'q': -3, 'r': 4},
-    {'q': -2, 'r': 4},
-    {'q': -1, 'r': 4},
-    {'q': 1, 'r': 3},
-    {'q': 2, 'r': 2},
-    {'q': 3, 'r': 1},
-    {'q': 4, 'r': -1},
-    {'q': 4, 'r': -2},
-    {'q': 4, 'r': -3},
-    {'q': 3, 'r': -4},
-    {'q': 2, 'r': -4},
-    {'q': 1, 'r': -4}
-  ];
-  var arrayOutQR = [
-    {'q': 0, 'r': -4},
-    {'q': -4, 'r': 0},
-    {'q': -4, 'r': 4},
-    {'q': 0, 'r': 4},
-    {'q': 4, 'r': 0},
-    {'q': 4, 'r': -4}
-  ];
 
   @override
   void initState() {
