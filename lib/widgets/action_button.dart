@@ -27,6 +27,7 @@ class _ActionButtonState extends State<ActionButton> {
       onPressed: () async {
         setState(() {
           gameStarted = true;
+          puzzleInitiated = true;
           stopWatchTimer.onExecute.add(StopWatchExecute.reset);
           stopWatchTimer.onExecute.add(StopWatchExecute.start);
           beeMove = 0;

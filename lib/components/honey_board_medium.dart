@@ -6,9 +6,9 @@ import 'package:hexagon/hexagon.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
 
-class PuzzleBoardHoney extends StatefulWidget {
+class PuzzleBoardHoneyMedium extends StatefulWidget {
   final double size;
-  const PuzzleBoardHoney(
+  const PuzzleBoardHoneyMedium(
       {Key? key,
       required this.size,
       required this.controllerTile,
@@ -17,10 +17,10 @@ class PuzzleBoardHoney extends StatefulWidget {
   final StreamController<int> controllerTile;
   final StreamController<int> controllerBee;
   @override
-  State<PuzzleBoardHoney> createState() => _PuzzleBoardHoneyState();
+  State<PuzzleBoardHoneyMedium> createState() => _PuzzleBoardHoneyMediumState();
 }
 
-class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
+class _PuzzleBoardHoneyMediumState extends State<PuzzleBoardHoneyMedium>
     with SingleTickerProviderStateMixin {
   final Stream<bool> _gamePlay = gamePlay.stream;
   late StreamSubscription<bool> streamSubscriptionGame;
@@ -53,6 +53,34 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     {'q': 4, 'r': 0},
     {'q': 4, 'r': -4}
   ];
+  var arrayOutBlockQR = [
+    {'q': 0, 'r': -3},
+    {'q': -3, 'r': 0},
+    {'q': -3, 'r': 3},
+    {'q': 0, 'r': 3},
+    {'q': 3, 'r': 0},
+    {'q': 3, 'r': -3}
+  ];
+  var arrayChangeQR = [
+    {'q': 0, 'r': -1},
+    {'q': 1, 'r': -1},
+    {'q': 1, 'r': 0},
+    {'q': 0, 'r': 1},
+    {'q': -1, 'r': 1},
+    {'q': -1, 'r': 0},
+    {'q': 0, 'r': -2},
+    {'q': 1, 'r': -2},
+    {'q': 2, 'r': -2},
+    {'q': 2, 'r': -1},
+    {'q': 2, 'r': 0},
+    {'q': 1, 'r': 1},
+    {'q': 0, 'r': 2},
+    {'q': -1, 'r': 2},
+    {'q': -2, 'r': 2},
+    {'q': -2, 'r': 1},
+    {'q': -2, 'r': 0},
+    {'q': -1, 'r': -1},
+  ];
 
   @override
   void initState() {
@@ -62,6 +90,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
         r = 0;
         setOut();
         updateArrows();
+        updateChanges();
         puzzleInitiated = true;
       }
 
@@ -82,6 +111,7 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
       rChar = 0;
       setOut();
       updateArrows();
+      updateChanges();
     });
   }
 
@@ -147,50 +177,46 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                         ((q - coordinates.q).abs() < 2 &&
                             (r - coordinates.r).abs() < 2) &&
                         gameStarted == true) {
-                      setState(() {
-                        if (qArr1 == coordinates.q && rArr1 == coordinates.r) {
-                          qArr1 = q;
-                          rArr1 = r;
-                          arrow = arr1;
-                        } else if (qArr2 == coordinates.q &&
-                            rArr2 == coordinates.r) {
-                          qArr2 = q;
-                          rArr2 = r;
-                          arrow = arr2;
-                        } else if (qArr3 == coordinates.q &&
-                            rArr3 == coordinates.r) {
-                          qArr3 = q;
-                          rArr3 = r;
-                          arrow = arr3;
-                        }
-                        if (arrow == arr1) {
-                          if (qChar == qArr1 && rChar == rArr1) {
-                            moveBee();
-                            updateArrows();
-                            widget.controllerBee.add(++beeMove);
+                      if (!(coordinates.q == qBlockHome1 &&
+                              coordinates.r == rBlockHome1) &&
+                          !(coordinates.q == qBlockHome2 &&
+                              coordinates.r == rBlockHome2)) {
+                        setState(() {
+                          if (qArr1 == coordinates.q &&
+                              rArr1 == coordinates.r) {
+                            qArr1 = q;
+                            rArr1 = r;
+                            arrow = arr1;
+                          } else if (qArr2 == coordinates.q &&
+                              rArr2 == coordinates.r) {
+                            qArr2 = q;
+                            rArr2 = r;
+                            arrow = arr2;
                           }
-                        } else if (arrow == arr2) {
-                          if (qChar == qArr2 && rChar == rArr2) {
-                            moveBee();
-                            updateArrows();
-                            widget.controllerBee.add(++beeMove);
+                          if (arrow == arr1) {
+                            if (qChar == qArr1 && rChar == rArr1) {
+                              moveBee();
+                              updateArrows();
+                              updateChanges();
+                              widget.controllerBee.add(++beeMove);
+                            }
+                          } else if (arrow == arr2) {
+                            if (qChar == qArr2 && rChar == rArr2) {
+                              moveBee();
+                              updateArrows();
+                              updateChanges();
+                              widget.controllerBee.add(++beeMove);
+                            }
                           }
-                        } else if (arrow == arr3) {
-                          if (qChar == qArr3 && rChar == rArr3) {
-                            moveBee();
-                            updateArrows();
-                            controllerBee.add(++beeMove);
+                          if ((qChar == qOut1 && rChar == rOut1) ||
+                              (qChar == qOut2 && rChar == rOut2)) {
+                            onComplete();
                           }
-                        }
-                        if ((qChar == qOut1 && rChar == rOut1) ||
-                            (qChar == qOut2 && rChar == rOut2) ||
-                            (qChar == qOut3 && rChar == rOut3)) {
-                          onComplete();
-                        }
-                        q = coordinates.q;
-                        r = coordinates.r;
-                        controllerTile.add(++tileMove);
-                      });
+                          q = coordinates.q;
+                          r = coordinates.r;
+                          controllerTile.add(++tileMove);
+                        });
+                      }
                     }
                   },
                 ),
@@ -208,15 +234,23 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     } else if (qMain == qArr2 && rMain == rArr2) {
       return iconArrow(
           arr2); //Text('$arr2', style: const TextStyle(fontSize: 30));
-    } else if (qMain == qArr3 && rMain == rArr3) {
-      return iconArrow(
-          arr3); //Text('$arr3', style: const TextStyle(fontSize: 30));
     } else if (qMain == qOut1 && rMain == rOut1) {
       return const Icon(Icons.home_outlined, size: 35);
     } else if (qMain == qOut2 && rMain == rOut2) {
       return const Icon(Icons.home_outlined, size: 35);
-    } else if (qMain == qOut3 && rMain == rOut3) {
-      return const Icon(Icons.home_outlined, size: 35);
+    } else if (qMain == qBlockHome1 && rMain == rBlockHome1) {
+      return const Icon(
+        Icons.coronavirus_sharp,
+        size: 35,
+        color: Colors.red,
+      );
+    } else if (qMain == qBlockHome2 && rMain == rBlockHome2) {
+      return const Icon(Icons.coronavirus_sharp, size: 35, color: Colors.red);
+    } else if ((qMain == qChg1 && rMain == rChg1) ||
+        (qMain == qChg2 && rMain == rChg2) ||
+        (qMain == qChg3 && rMain == rChg3)) {
+      return const Icon(Icons.change_circle_outlined,
+          size: 35, color: Colors.green);
     }
   }
 
@@ -277,6 +311,15 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     if (qChar.abs() >= 5 || rChar.abs() >= 5 || sChar.abs() >= 5) {
       qChar = curQChar;
       rChar = curRChar;
+    } else if ((qChar == qBlockHome1 && rChar == rBlockHome1) ||
+        (qChar == qBlockHome2 && rChar == rBlockHome2)) {
+      qChar = curQChar;
+      rChar = curRChar;
+    } else if ((qChar == qChg1 && rChar == rChg1) ||
+        (qChar == qChg2 && rChar == rChg2) ||
+        (qChar == qChg3 && rChar == rChg3)) {
+      qChar = 0;
+      rChar = 0;
     }
   }
 
@@ -285,6 +328,9 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     var qrResult = arrayOutQR.elementAt(indexQR1);
     qOut1 = qrResult['q']!;
     rOut1 = qrResult['r']!;
+    var qrBlock = arrayOutBlockQR.elementAt(indexQR1);
+    qBlockHome1 = qrBlock['q']!;
+    rBlockHome1 = qrBlock['r']!;
     int indexQR2 = random.nextInt(5);
     while (indexQR1 == indexQR2) {
       indexQR2 = random.nextInt(5);
@@ -292,13 +338,9 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     qrResult = arrayOutQR.elementAt(indexQR2);
     qOut2 = qrResult['q']!;
     rOut2 = qrResult['r']!;
-    int indexQR3 = random.nextInt(5);
-    while (indexQR1 == indexQR3 || indexQR2 == indexQR3) {
-      indexQR3 = random.nextInt(5);
-    }
-    qrResult = arrayOutQR.elementAt(indexQR3);
-    qOut3 = qrResult['q']!;
-    rOut3 = qrResult['r']!;
+    qrBlock = arrayOutBlockQR.elementAt(indexQR2);
+    qBlockHome2 = qrBlock['q']!;
+    rBlockHome2 = qrBlock['r']!;
   }
 
   updateArrows() {
@@ -313,22 +355,33 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
     qrResult = arrayQR.elementAt(indexQR2);
     qArr2 = qrResult['q']!;
     rArr2 = qrResult['r']!;
-    int indexQR3 = random.nextInt(17);
-    while (indexQR1 == indexQR3 || indexQR2 == indexQR3) {
-      indexQR3 = random.nextInt(17);
-    }
-    qrResult = arrayQR.elementAt(indexQR3);
-    qArr3 = qrResult['q']!;
-    rArr3 = qrResult['r']!;
+
     arr1 = random.nextInt(5);
     arr2 = random.nextInt(5);
     while (arr1 == arr2) {
       arr2 = random.nextInt(5);
     }
-    arr3 = random.nextInt(5);
-    while (arr1 == arr3 || arr2 == arr3) {
-      arr3 = random.nextInt(5);
+  }
+
+  updateChanges() {
+    int indexQR1 = random.nextInt(17);
+    var qrResult = arrayChangeQR.elementAt(indexQR1);
+    qChg1 = qrResult['q']!;
+    rChg1 = qrResult['r']!;
+    int indexQR2 = random.nextInt(17);
+    while (indexQR1 == indexQR2) {
+      indexQR2 = random.nextInt(17);
     }
+    qrResult = arrayChangeQR.elementAt(indexQR2);
+    qChg2 = qrResult['q']!;
+    rChg2 = qrResult['r']!;
+    int indexQR3 = random.nextInt(17);
+    while (indexQR1 == indexQR3 || indexQR2 == indexQR3) {
+      indexQR3 = random.nextInt(17);
+    }
+    qrResult = arrayChangeQR.elementAt(indexQR3);
+    qChg3 = qrResult['q']!;
+    rChg3 = qrResult['r']!;
   }
 
   void onComplete() {

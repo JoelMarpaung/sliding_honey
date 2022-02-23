@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import '../colors/colors.dart';
 
 Widget drawer(BuildContext context) {
   return SizedBox(
     width: 150,
     child: Drawer(
+      backgroundColor: PuzzleColors.greenPrimary,
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
@@ -15,35 +17,44 @@ Widget drawer(BuildContext context) {
             child: null,
           ),
           ListTile(
-            title: const Text('Home'),
+            title: const Text('Home',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
             onTap: () {
               context.go('/');
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Tutorial'),
-            onTap: () {
-              context.go('/tutorial');
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            title: const Text('Easy'),
+            title: const Text('Easy',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
             onTap: () {
               context.go('/easy');
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Medium'),
+            title: const Text('Medium',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
             onTap: () {
               context.go('/medium');
               Navigator.pop(context);
             },
           ),
           ListTile(
-            title: const Text('Hard'),
+            title: const Text('Hard',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold)),
             onTap: () {
               context.go('/hard');
               Navigator.pop(context);

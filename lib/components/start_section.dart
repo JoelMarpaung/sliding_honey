@@ -18,6 +18,12 @@ class StartSection extends StatefulWidget {
 
 class _StartSectionState extends State<StartSection> {
   @override
+  void initState() {
+    setState(() {});
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

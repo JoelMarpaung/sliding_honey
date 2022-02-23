@@ -44,11 +44,6 @@ class MyRouter {
         path: '/hard',
         builder: (context, state) => const HardLevelScreen(),
       ),
-      GoRoute(
-        name: 'tutorial',
-        path: '/tutorial',
-        builder: (context, state) => const TutorialScreen(),
-      ),
     ],
     errorPageBuilder: (context, state) => MaterialPage<void>(
       key: state.pageKey,
@@ -59,7 +54,7 @@ class MyRouter {
       final splashScreen = state.subloc == splashLoc;
       final initialized = appState.isInitialized;
       final rootLoc =
-          state.namedLocation('easy'); //state.namedLocation('home');
+          state.namedLocation('medium'); //state.namedLocation('home');
 
       if (!initialized && !splashScreen) return splashLoc;
       if (initialized && splashScreen) return rootLoc;
