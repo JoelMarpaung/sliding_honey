@@ -123,7 +123,15 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
                             (r - coordinates.r).abs() < 2) &&
                         gameStarted == true) {
                       if (!(coordinates.q == qBlockHome1 &&
-                          coordinates.r == rBlockHome1)) {
+                              coordinates.r == rBlockHome1) &&
+                          !(coordinates.q == qChg1 && coordinates.r == rChg1) &&
+                          !(coordinates.q == qChg2 && coordinates.r == rChg2) &&
+                          !(coordinates.q == qChg3 && coordinates.r == rChg3) &&
+                          !(coordinates.q == qChg4 && coordinates.r == rChg4) &&
+                          !(coordinates.q == qEnd1 && coordinates.r == rEnd1) &&
+                          !(coordinates.q == qEnd2 && coordinates.r == rEnd2) &&
+                          !(coordinates.q == qEnd3 && coordinates.r == rEnd3) &&
+                          !(coordinates.q == qEnd4 && coordinates.r == rEnd4)) {
                         setState(() {
                           if (qArr1 == coordinates.q &&
                               rArr1 == coordinates.r) {
@@ -322,66 +330,66 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
   }
 
   updateChanges() {
-    int indexQR1 = random.nextInt(41);
+    int indexQR1 = random.nextInt(29);
     var qrResult = arrayChangeQR.elementAt(indexQR1);
     qChg1 = qrResult['q']!;
     rChg1 = qrResult['r']!;
-    int indexQR2 = random.nextInt(41);
+    int indexQR2 = random.nextInt(29);
     while (indexQR1 == indexQR2) {
-      indexQR2 = random.nextInt(41);
+      indexQR2 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR2);
     qChg2 = qrResult['q']!;
     rChg2 = qrResult['r']!;
-    int indexQR3 = random.nextInt(41);
+    int indexQR3 = random.nextInt(29);
     while (indexQR1 == indexQR3 || indexQR2 == indexQR3) {
-      indexQR3 = random.nextInt(41);
+      indexQR3 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR3);
     qChg3 = qrResult['q']!;
     rChg3 = qrResult['r']!;
-    int indexQR4 = random.nextInt(41);
+    int indexQR4 = random.nextInt(29);
     while (
         indexQR1 == indexQR4 || indexQR2 == indexQR4 || indexQR3 == indexQR4) {
-      indexQR4 = random.nextInt(41);
+      indexQR4 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR4);
     qChg4 = qrResult['q']!;
     rChg4 = qrResult['r']!;
-    int indexQR5 = random.nextInt(41);
+    int indexQR5 = random.nextInt(29);
     while (indexQR1 == indexQR5 ||
         indexQR2 == indexQR5 ||
         indexQR3 == indexQR5 ||
         indexQR4 == indexQR5) {
-      indexQR5 = random.nextInt(41);
+      indexQR5 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR5);
     qEnd1 = qrResult['q']!;
     rEnd1 = qrResult['r']!;
-    int indexQR6 = random.nextInt(41);
+    int indexQR6 = random.nextInt(29);
     while (indexQR1 == indexQR6 ||
         indexQR2 == indexQR6 ||
         indexQR3 == indexQR6 ||
         indexQR4 == indexQR6 ||
         indexQR5 == indexQR6) {
-      indexQR6 = random.nextInt(41);
+      indexQR6 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR6);
     qEnd2 = qrResult['q']!;
     rEnd2 = qrResult['r']!;
-    int indexQR7 = random.nextInt(41);
+    int indexQR7 = random.nextInt(29);
     while (indexQR1 == indexQR7 ||
         indexQR2 == indexQR7 ||
         indexQR3 == indexQR7 ||
         indexQR4 == indexQR7 ||
         indexQR5 == indexQR7 ||
         indexQR6 == indexQR7) {
-      indexQR7 = random.nextInt(41);
+      indexQR7 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR7);
     qEnd3 = qrResult['q']!;
     rEnd3 = qrResult['r']!;
-    int indexQR8 = random.nextInt(41);
+    int indexQR8 = random.nextInt(29);
     while (indexQR1 == indexQR8 ||
         indexQR2 == indexQR8 ||
         indexQR3 == indexQR8 ||
@@ -389,7 +397,7 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
         indexQR5 == indexQR8 ||
         indexQR6 == indexQR8 ||
         indexQR7 == indexQR8) {
-      indexQR8 = random.nextInt(41);
+      indexQR8 = random.nextInt(29);
     }
     qrResult = arrayChangeQR.elementAt(indexQR8);
     qEnd4 = qrResult['q']!;
