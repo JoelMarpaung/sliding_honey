@@ -5,3 +5,4 @@ export 'end_section.dart';
 export 'honey_board_medium.dart';
 export 'honey_board_hard.dart';
 export 'tutorial_section.dart';
+export 'image_section.dart';

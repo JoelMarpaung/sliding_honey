@@ -43,18 +43,23 @@ class _HomeSectionsState extends State<HomeSections> {
   Widget build(BuildContext context) {
     return ResponsiveLayoutBuilder(
       small: (context, child) => Column(
-        children: const [
-          TutorialSection(),
-        ],
+        children: const [TutorialSection(), ImageSection()],
       ),
       medium: (context, child) => Column(
-        children: const [
-          TutorialSection(),
-        ],
+        children: const [TutorialSection(), ImageSection()],
       ),
       large: (context, child) => Column(
-        children: const [
-          TutorialSection(),
+        children: [
+          Row(
+            children: const [
+              Expanded(
+                child: TutorialSection(),
+              ),
+              Expanded(
+                child: ImageSection(),
+              ),
+            ],
+          ),
         ],
       ),
     );
