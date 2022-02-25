@@ -43,3 +43,4 @@ int tileMove = 0;
 StopWatchTimer stopWatchTimer = StopWatchTimer(
   mode: StopWatchMode.countUp,
 );
+bool audio = true;

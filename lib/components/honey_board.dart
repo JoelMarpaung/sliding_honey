@@ -6,6 +6,7 @@ import 'package:hexagon/hexagon.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
 import '../models/qr_model.dart';
+import 'package:just_audio/just_audio.dart';
 
 class PuzzleBoardHoney extends StatefulWidget {
   final double size;
@@ -26,6 +27,29 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
   final Stream<bool> _gamePlay = gamePlay.stream;
   late StreamSubscription<bool> streamSubscriptionGame;
   var random = Random();
+  final player1 = AudioPlayer();
+  final player2 = AudioPlayer();
+  final player3 = AudioPlayer();
+  final player4 = AudioPlayer();
+  Future<void> tileSound() async {
+    await player1.setAsset('/audio/tile_move.mp3');
+    await player1.play();
+  }
+
+  Future<void> tileNotMoveSound() async {
+    await player2.setAsset('/audio/click.mp3');
+    await player2.play();
+  }
+
+  Future<void> beeMoveSound() async {
+    await player3.setAsset('/audio/skateboard.mp3');
+    await player3.play();
+  }
+
+  Future<void> completeSound() async {
+    await player4.setAsset('/audio/success.mp3');
+    await player4.play();
+  }
 
   @override
   void initState() {
@@ -141,29 +165,48 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
                             moveBee();
                             updateArrows();
                             widget.controllerBee.add(++beeMove);
+                            if (audio) {
+                              beeMoveSound();
+                            }
                           }
                         } else if (arrow == arr2) {
                           if (qChar == qArr2 && rChar == rArr2) {
                             moveBee();
                             updateArrows();
                             widget.controllerBee.add(++beeMove);
+                            if (audio) {
+                              beeMoveSound();
+                            }
                           }
                         } else if (arrow == arr3) {
                           if (qChar == qArr3 && rChar == rArr3) {
                             moveBee();
                             updateArrows();
                             controllerBee.add(++beeMove);
+                            if (audio) {
+                              beeMoveSound();
+                            }
                           }
                         }
                         if ((qChar == qOut1 && rChar == rOut1) ||
                             (qChar == qOut2 && rChar == rOut2) ||
                             (qChar == qOut3 && rChar == rOut3)) {
                           onComplete();
+                          if (audio) {
+                            completeSound();
+                          }
                         }
                         q = coordinates.q;
                         r = coordinates.r;
                         controllerTile.add(++tileMove);
+                        if (audio) {
+                          tileSound();
+                        }
                       });
+                    } else {
+                      if (audio) {
+                        tileNotMoveSound();
+                      }
                     }
                   },
                 ),

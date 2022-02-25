@@ -6,6 +6,7 @@ import 'package:hexagon/hexagon.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../globals.dart';
 import '../models/qr_model.dart';
+import 'package:just_audio/just_audio.dart';
 
 class PuzzleBoardHoneyHard extends StatefulWidget {
   final double size;
@@ -26,6 +27,41 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
   final Stream<bool> _gamePlay = gamePlay.stream;
   late StreamSubscription<bool> streamSubscriptionGame;
   var random = Random();
+  final player1 = AudioPlayer();
+  final player2 = AudioPlayer();
+  final player3 = AudioPlayer();
+  final player4 = AudioPlayer();
+  final player5 = AudioPlayer();
+  final player6 = AudioPlayer();
+  Future<void> tileSound() async {
+    await player1.setAsset('/audio/tile_move.mp3');
+    await player1.play();
+  }
+
+  Future<void> tileNotMoveSound() async {
+    await player2.setAsset('/audio/click.mp3');
+    await player2.play();
+  }
+
+  Future<void> beeMoveSound() async {
+    await player3.setAsset('/audio/skateboard.mp3');
+    await player3.play();
+  }
+
+  Future<void> completeSound() async {
+    await player4.setAsset('/audio/success.mp3');
+    await player4.play();
+  }
+
+  Future<void> greenSound() async {
+    await player5.setAsset('/audio/dumbbell.mp3');
+    await player5.play();
+  }
+
+  Future<void> blueSound() async {
+    await player6.setAsset('/audio/sandwich.mp3');
+    await player6.play();
+  }
 
   @override
   void initState() {
@@ -122,20 +158,22 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
                         ((q - coordinates.q).abs() < 2 &&
                             (r - coordinates.r).abs() < 2) &&
                         gameStarted == true) {
+                      // if (!(coordinates.q == qBlockHome1 &&
+                      //         coordinates.r == rBlockHome1) &&
+                      //     !(coordinates.q == qChg1 && coordinates.r == rChg1) &&
+                      //     !(coordinates.q == qChg2 && coordinates.r == rChg2) &&
+                      //     !(coordinates.q == qChg3 && coordinates.r == rChg3) &&
+                      //     !(coordinates.q == qChg4 && coordinates.r == rChg4) &&
+                      //     !(coordinates.q == qChg5 && coordinates.r == rChg5) &&
+                      //     !(coordinates.q == qChg6 && coordinates.r == rChg6) &&
+                      //     !(coordinates.q == qEnd1 && coordinates.r == rEnd1) &&
+                      //     !(coordinates.q == qEnd2 && coordinates.r == rEnd2) &&
+                      //     !(coordinates.q == qEnd3 && coordinates.r == rEnd3) &&
+                      //     !(coordinates.q == qEnd4 && coordinates.r == rEnd4) &&
+                      //     !(coordinates.q == qEnd5 && coordinates.r == rEnd5) &&
+                      //     !(coordinates.q == qEnd6 && coordinates.r == rEnd6)) {
                       if (!(coordinates.q == qBlockHome1 &&
-                              coordinates.r == rBlockHome1) &&
-                          !(coordinates.q == qChg1 && coordinates.r == rChg1) &&
-                          !(coordinates.q == qChg2 && coordinates.r == rChg2) &&
-                          !(coordinates.q == qChg3 && coordinates.r == rChg3) &&
-                          !(coordinates.q == qChg4 && coordinates.r == rChg4) &&
-                          !(coordinates.q == qChg5 && coordinates.r == rChg5) &&
-                          !(coordinates.q == qChg6 && coordinates.r == rChg6) &&
-                          !(coordinates.q == qEnd1 && coordinates.r == rEnd1) &&
-                          !(coordinates.q == qEnd2 && coordinates.r == rEnd2) &&
-                          !(coordinates.q == qEnd3 && coordinates.r == rEnd3) &&
-                          !(coordinates.q == qEnd4 && coordinates.r == rEnd4) &&
-                          !(coordinates.q == qEnd5 && coordinates.r == rEnd5) &&
-                          !(coordinates.q == qEnd6 && coordinates.r == rEnd6)) {
+                          coordinates.r == rBlockHome1)) {
                         setState(() {
                           if (qArr1 == coordinates.q &&
                               rArr1 == coordinates.r) {
@@ -154,6 +192,9 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
                               updateArrows();
                               updateChanges();
                               widget.controllerBee.add(++beeMove);
+                              if (audio) {
+                                beeMoveSound();
+                              }
                             }
                           } else if (arrow == arr2) {
                             if (qChar == qArr2 && rChar == rArr2) {
@@ -161,15 +202,32 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
                               updateArrows();
                               updateChanges();
                               widget.controllerBee.add(++beeMove);
+                              if (audio) {
+                                beeMoveSound();
+                              }
                             }
                           }
                           if ((qChar == qOut1 && rChar == rOut1)) {
                             onComplete();
+                            if (audio) {
+                              completeSound();
+                            }
                           }
                           q = coordinates.q;
                           r = coordinates.r;
                           controllerTile.add(++tileMove);
+                          if (audio) {
+                            tileSound();
+                          }
                         });
+                      } else {
+                        if (audio) {
+                          tileNotMoveSound();
+                        }
+                      }
+                    } else {
+                      if (audio) {
+                        tileNotMoveSound();
                       }
                     }
                   },
@@ -283,6 +341,9 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
         (qChar == qChg6 && rChar == rChg6)) {
       qChar = 0;
       rChar = 0;
+      if (audio) {
+        greenSound();
+      }
     } else if ((qChar == qEnd1 && rChar == rEnd1) ||
         (qChar == qEnd2 && rChar == rEnd2) ||
         (qChar == qEnd3 && rChar == rEnd3) ||
@@ -291,6 +352,9 @@ class _PuzzleBoardHoneyHardState extends State<PuzzleBoardHoneyHard>
         (qChar == qEnd6 && rChar == rEnd6)) {
       qChar = qEnd;
       rChar = rEnd;
+      if (audio) {
+        blueSound();
+      }
     }
   }
 

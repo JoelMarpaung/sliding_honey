@@ -15,7 +15,7 @@ class MediumLevelScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF00504C),
       ),
       backgroundColor: const Color(0xFF00504C),
-      drawer: drawer(context),
+      drawer: const DrawerScreen(),
       body: LayoutBuilder(builder: (context, constraints) {
         return SingleChildScrollView(
           child: ConstrainedBox(
