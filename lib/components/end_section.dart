@@ -28,7 +28,7 @@ class _EndSectionState extends State<EndSection> {
           large: 30,
         ),
         Image(
-          image: AssetImage('images/bee.png'),
+          image: AssetImage('assets/images/bee.png'),
           width: 200,
         ),
       ],

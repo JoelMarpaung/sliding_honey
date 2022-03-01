@@ -32,22 +32,22 @@ class _PuzzleBoardHoneyState extends State<PuzzleBoardHoney>
   final player3 = AudioPlayer();
   final player4 = AudioPlayer();
   Future<void> tileSound() async {
-    await player1.setAsset('/audio/tile_move.mp3');
+    await player1.setAsset('assets/audio/tile_move.mp3');
     await player1.play();
   }
 
   Future<void> tileNotMoveSound() async {
-    await player2.setAsset('/audio/click.mp3');
+    await player2.setAsset('assets/audio/click.mp3');
     await player2.play();
   }
 
   Future<void> beeMoveSound() async {
-    await player3.setAsset('/audio/skateboard.mp3');
+    await player3.setAsset('assets/audio/skateboard.mp3');
     await player3.play();
   }
 
   Future<void> completeSound() async {
-    await player4.setAsset('/audio/success.mp3');
+    await player4.setAsset('assets/audio/success.mp3');
     await player4.play();
   }
 

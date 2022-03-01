@@ -11,7 +11,7 @@ class ImageSection extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(20),
         child: Image(
-          image: AssetImage("/images/tutorial.png"),
+          image: AssetImage("assets/images/tutorial.png"),
         ),
       ),
     );
