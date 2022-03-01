@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/models.dart';
+import '../../layout/layout.dart';
 
 class SplashScreen extends StatefulWidget {
   static MaterialPage page() {
@@ -24,17 +25,60 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            // Image(
-            //   height: 200,
-            //   image: AssetImage('assets/fooderlich_assets/rw_logo.png'),
-            // ),
-            Icon(Icons.lock_clock, size: 200),
-            Text('Initializing...'),
-          ],
+      body: ResponsiveLayoutBuilder(
+        small: (context, child) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Image(
+                height: 200,
+                image: AssetImage('assets/images/bee.png'),
+              ),
+              Text(
+                'Loading ...',
+                style: TextStyle(
+                    fontSize: 30,
+                    fontFamily: 'Helvetica',
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+        medium: (context, child) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Image(
+                height: 300,
+                image: AssetImage('assets/images/bee.png'),
+              ),
+              Text(
+                'Loading ...',
+                style: TextStyle(
+                    fontSize: 40,
+                    fontFamily: 'Helvetica',
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+        large: (context, child) => Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              Image(
+                height: 500,
+                image: AssetImage('assets/images/bee.png'),
+              ),
+              Text(
+                'Loading ...',
+                style: TextStyle(
+                    fontSize: 55,
+                    fontFamily: 'Helvetica',
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
         ),
       ),
     );
